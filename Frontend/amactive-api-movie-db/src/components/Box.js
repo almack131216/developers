@@ -2,16 +2,23 @@ import React, { Component } from "react";
 
 export default class Box extends Component {
   render() {
-    const { page, total_results, total_pages, results } = this.props.results;
+    const { page, total_results, total_pages } = this.props.results;
+    let s = this.props.s;
 
     return (
       <div className="box-wrap">
         <div className="box">
           <p>[Box]</p>
-          <input type="text" name="s" id="s" />
+          <input
+            type="text"
+            name="s"
+            id="s"
+            value={s}
+            onChange={this.props.changed}
+          />
           <button
-            onClick={() => {
-              this.props.handleClick();
+            onClick={e => {
+              this.props.handleClick(s);
             }}
           >
             Btn

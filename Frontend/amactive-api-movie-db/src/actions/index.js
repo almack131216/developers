@@ -1,15 +1,23 @@
 import axios from "axios";
 
-export function loadResults() {
+export function loadResults(getS) {
+  let s = getS ? getS : null;
+  console.log("[loadResults] s = ", s);
+  if (!s) {
+    console.log("[loadResults] DO NOT LOAD because s = ", s);
+    return dispatch => {
+      return [];
+    };
+  }
+  console.log("[loadResults] Generate api url based on s = ", s);
+  const apiUrl = `https://api.themoviedb.org/3/search/movie?api_key=03b8572954325680265531140190fd2a&language=en-US&query=${s}&page=1&include_adult=false`;
+
   return dispatch => {
-    return axios
-      .get(
-        "https://api.themoviedb.org/3/search/movie?api_key=03b8572954325680265531140190fd2a&language=en-US&query=star&page=1&include_adult=false"
-      )
-      .then(response => {
-        console.log(response.data);
-        dispatch(populateList(response.data));
-      });
+    return axios.get(apiUrl).then(response => {
+      console.log(apiUrl);
+      console.log(response.data);
+      dispatch(populateList(response.data));
+    });
   };
 }
 
