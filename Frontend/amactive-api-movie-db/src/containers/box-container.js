@@ -6,11 +6,10 @@ import Box from "../components/box";
 class BoxContainer extends Component {
   constructor(props) {
     super(props);
-    // this.s = props.s;
     console.log("[BoxContainer] ", props);
     this.state = {
-      s: props.s,
-      p: props.p
+      query: props.query,
+      page: props.page
     };
   }
 
@@ -22,22 +21,21 @@ class BoxContainer extends Component {
     this.setState({ [name]: value });
   };
 
-  goToPage = getP => {
-    console.log("[BoxContainer] goToPage > p = " + getP);
-    // this.setState({ p: getP });
-    this.props.loadResults(this.state.s, getP);
+  goToPage = getPage => {
+    console.log("[BoxContainer] goToPage > page = " + getPage);
+    this.props.loadResults(this.state.query, getPage);
   };
 
   render() {
     return (
       <div>
         <p>
-          [2. BoxContainer] s: {this.state.s}, p: {this.state.p}
+          [2. BoxContainer] query: {this.state.query}, page: {this.state.page}
         </p>
         <Box
-          handleClick={s => this.props.loadResults(this.state.s, 1)}
+          handleClick={() => this.props.loadResults(this.state.query, 1)}
           handlePageChange={p => this.goToPage(p)}
-          p={this.state.p}
+          p={this.state.page}
           results={this.props.results}
           changed={this.handleFilterChange}
         />

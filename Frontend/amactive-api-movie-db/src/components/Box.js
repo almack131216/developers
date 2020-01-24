@@ -3,26 +3,31 @@ import parse from "html-react-parser";
 
 export default class Box extends Component {
   render() {
-    const { page, total_results, total_pages, results } = this.props.results;
-    let s = this.props.s;
-    let p = this.props.p ? this.props.p : 1;
+    const {
+      page: pageActive,
+      total_results,
+      total_pages,
+      results
+    } = this.props.results;
+    let query = this.props.query;
+    let page = this.props.page ? this.props.page : 1;
 
     return (
       <div className="box-wrap">
         <div className="box">
           <p>
-            [3. Box] s: {s}, p: {p}
+            [3. Box] s: {query}, p: {page}
           </p>
           <input
             type="text"
-            name="s"
-            id="s"
-            value={s}
+            name="query"
+            id="query"
+            value={query}
             onChange={this.props.changed}
           />
           <button
             onClick={e => {
-              this.props.handleClick(s);
+              this.props.handleClick(query);
             }}
           >
             Btn
@@ -33,7 +38,7 @@ export default class Box extends Component {
           {/* {this.props.results} */}
           <ul>
             <li>
-              page: {page}{" "}
+              page: {pageActive}{" "}
               <button
                 onClick={e => {
                   this.props.handlePageChange(1);
