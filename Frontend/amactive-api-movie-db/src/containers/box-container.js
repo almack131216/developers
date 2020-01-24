@@ -9,7 +9,8 @@ class BoxContainer extends Component {
     // this.s = props.s;
     console.log("[BoxContainer] ", props);
     this.state = {
-      s: props.s
+      s: props.s,
+      p: props.p
     };
   }
 
@@ -18,15 +19,25 @@ class BoxContainer extends Component {
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = event.target.name;
     console.log("[BoxContainer] handleFilterChange > " + name + " = " + value);
-    this.state[name] = value;
+    this.setState({ [name]: value });
+  };
+
+  goToPage = getP => {
+    console.log("[BoxContainer] goToPage > p = " + getP);
+    // this.setState({ p: getP });
+    this.props.loadResults(this.state.s, getP);
   };
 
   render() {
     return (
       <div>
-        <p>[BoxContainer] {this.state.s}</p>
+        <p>
+          [2. BoxContainer] s: {this.state.s}, p: {this.state.p}
+        </p>
         <Box
-          handleClick={s => this.props.loadResults(this.state.s)}
+          handleClick={s => this.props.loadResults(this.state.s, 1)}
+          handlePageChange={p => this.goToPage(p)}
+          p={this.state.p}
           results={this.props.results}
           changed={this.handleFilterChange}
         />

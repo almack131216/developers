@@ -32,7 +32,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/">
               <div>
-                <p>[index.js]</p>
+                <p>[1. index.js]</p>
                 <BoxContainer />
               </div>
             </Route>
