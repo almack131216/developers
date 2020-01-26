@@ -1,6 +1,6 @@
 let defaultState = {
-  s: "",
-  p: 1,
+  query: "",
+  page: 1,
   results: {}
 };
 
@@ -9,8 +9,8 @@ const mainReducer = (state = defaultState, action) => {
     console.log("mainReducer ", action);
     return {
       ...state,
-      s: action.s,
-      p: action.p,
+      query: action.query,
+      page: action.page,
       results: action.results
     };
   } else {

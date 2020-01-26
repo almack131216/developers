@@ -1,0 +1,8 @@
+.pagination-wrap {
+  background: green;
+  list-style: none;
+}
+
+.pagination-wrap li {
+  display: inline;
+}

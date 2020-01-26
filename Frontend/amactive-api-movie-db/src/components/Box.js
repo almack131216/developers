@@ -1,8 +1,12 @@
 import React, { Component } from "react";
-import parse from "html-react-parser";
+import { Link } from "react-router-dom";
+// import parse from "html-react-parser";
 
 export default class Box extends Component {
   render() {
+    console.log("[box.js] render()...");
+    // const siteData = this.props.siteData;
+    // console.log("[box.js] render()... siteData = ", siteData);
     const {
       page: pageActive,
       total_results,
@@ -16,7 +20,7 @@ export default class Box extends Component {
       <div className="box-wrap">
         <div className="box">
           <p>
-            [3. Box] s: {query}, p: {page}
+            [3. Box] query: {query}, page: {page}
           </p>
           <input
             type="text"
@@ -35,36 +39,10 @@ export default class Box extends Component {
         </div>
         <div className="box-results">
           <h1>Search results</h1>
+
           {/* {this.props.results} */}
           <ul>
-            <li>
-              page: {pageActive}{" "}
-              <button
-                onClick={e => {
-                  this.props.handlePageChange(1);
-                }}
-              >
-                1
-              </button>
-              {total_pages > 1 ? (
-                <button
-                  onClick={e => {
-                    this.props.handlePageChange(2);
-                  }}
-                >
-                  2
-                </button>
-              ) : null}
-              {total_pages > 2 ? (
-                <button
-                  onClick={e => {
-                    this.props.handlePageChange(3);
-                  }}
-                >
-                  3
-                </button>
-              ) : null}
-            </li>
+            <li>page: {pageActive}</li>
             <li>total_results: {total_results}</li>
             <li>total_pages: {total_pages}</li>
             {/* <li>results: {results}</li> */}
@@ -76,10 +54,12 @@ export default class Box extends Component {
                   <li key={index}>
                     <div style={{ display: "block" }}>
                       <div style={{ display: "inline-block", width: "30%" }}>
-                        <img
-                          style={{ width: "100%", height: "auto" }}
-                          src={`https://image.tmdb.org/t/p/w300_and_h450_bestv2${item.poster_path}`}
-                        />
+                        <Link to={`/movie/${item.id}`}>
+                          <img
+                            style={{ width: "100%", height: "auto" }}
+                            src={`https://image.tmdb.org/t/p/w300_and_h450_bestv2${item.poster_path}`}
+                          />
+                        </Link>
                       </div>
                       <div style={{ display: "inline-block", width: "70%" }}>
                         <h3>{item.title}</h3>
