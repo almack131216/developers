@@ -1,7 +1,7 @@
 let defaultState = {
   query: "",
   page: 1,
-  results: []
+  resp: []
 };
 
 const listReducer = (state = defaultState, action) => {
@@ -12,7 +12,7 @@ const listReducer = (state = defaultState, action) => {
       ...state,
       query: action.query,
       page: action.page,
-      results: action.results
+      resp: action.resp
     };
   } else {
     return {

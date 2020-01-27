@@ -20,6 +20,7 @@ export default class SearchInput extends Component {
             onChange={this.props.changed}
           />
           <button
+            disabled={query.length < 3}
             onClick={e => {
               this.props.handleClick(query);
             }}

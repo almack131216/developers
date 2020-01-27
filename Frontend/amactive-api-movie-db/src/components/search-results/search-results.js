@@ -13,7 +13,7 @@ export default class List extends Component {
       total_results,
       total_pages,
       results
-    } = this.props.results;
+    } = this.props.resp;
 
     return (
       <div className="list-wrap">

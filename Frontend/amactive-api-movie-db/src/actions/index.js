@@ -38,7 +38,7 @@ export function populateList(getQuery, getPage, getList) {
     type: "POPULATE_LIST",
     query: getQuery,
     page: getPage,
-    results: getList
+    resp: getList
   };
 }
 

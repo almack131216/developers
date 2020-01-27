@@ -17,7 +17,9 @@ class BoxContainer extends Component {
     this.state = {
       query: props.list.query,
       page: props.list.page,
-      results: props.list.results
+      resp: props.list.resp,
+      total_pages: props.list.resp.total_pages,
+      loading: true
     };
   }
 
@@ -31,32 +33,75 @@ class BoxContainer extends Component {
 
   goToPage = getPage => {
     ConsoleLog("[BoxContainer] goToPage > page = " + getPage);
-    this.setState({ page: getPage });
+    if (getPage === this.state.page) return;
+    this.setState({ page: getPage, resp: {} });
     this.props.loadResults(this.state.query, getPage);
   };
 
-  render() {
+  componentDidUpdate(oldProps) {
+    console.log("CDU", oldProps.list, this.props.list);
+    const newProps = this.props;
+    if (oldProps.list.query !== newProps.list.query) {
+      console.log(
+        "CDU >>>>>>> query: ",
+        oldProps.list.query,
+        " -> ",
+        newProps.list.query
+      );
+      this.updatePagination();
+      this.setState({ loading: false });
+    }
+    if (oldProps.list.page !== newProps.list.page) {
+      console.log(
+        "CDU >>>>>> page: ",
+        oldProps.list.page,
+        " -> ",
+        newProps.list.page
+      );
+      this.updatePagination();
+      this.setState({ page: newProps.list.page });
+    }
+  }
+
+  updatePagination() {
     // PAGINATION
-    let paginationElement = null;
-    if (this.props.list.results && this.props.list.results.results) {
-      const sortedItems = this.props.list.results.results;
+    this.paginationElement = null;
+    if (this.props.list.resp.results) {
+      const sortedItems = this.props.list.resp.results;
       const currentPage = this.state.page;
-      const totalPages = this.props.list.results.total_pages;
+      const totalPages = this.props.list.resp.total_pages;
       this.showPagination = totalPages > 1 ? true : false;
       ConsoleLog("[BoxContainer] showPagination: ", this.showPagination);
       // CHANGE page
       const paginate = pageNumber => this.goToPage(pageNumber);
       // CREATE pagination component based on props
-      paginationElement = this.showPagination ? (
+      this.paginationElement = this.showPagination ? (
         <Pagination
           totalPosts={sortedItems.length}
           paginate={paginate}
           currentPage={currentPage}
-          totalPages={this.props.list.results.total_pages}
+          totalPages={this.props.list.resp.total_pages}
         />
       ) : null;
     }
     // (END) PAGINATION
+  }
+
+  componentDidMount() {
+    // this.setState({ loading: false });
+  }
+
+  // searchSubmitted = getQuery => {
+  //   updatePagination();
+  // };
+
+  render() {
+    let { loading } = this.state;
+    loading = this.props.list.resp.length > 0 ? true : false;
+
+    if (loading) {
+      return "loading...";
+    }
 
     return (
       <div>
@@ -64,7 +109,7 @@ class BoxContainer extends Component {
           [2. BoxContainer] query: {this.state.query}, page: {this.state.page},
           showPagination: {this.showPagination === true ? "yes" : "no"}
         </p>
-        {paginationElement}
+        {this.paginationElement}
         <SearchInput
           siteData={this.siteData}
           handleClick={() => this.props.loadResults(this.state.query, 1)}
@@ -75,9 +120,9 @@ class BoxContainer extends Component {
         <SearchResults
           siteData={this.siteData}
           page={this.state.page}
-          results={this.props.list.results}
+          resp={this.props.list.resp}
         />
-        {paginationElement}
+        {this.paginationElement}
       </div>
     );
   }
