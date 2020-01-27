@@ -3,13 +3,14 @@ import ReactDOM from "react-dom";
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
+import ConsoleLog from "./assets/console-log";
 
 // import SiteData from "./assets/site-data";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Error from "./pages/error";
-import BoxContainer from "./containers/box-container";
+import BoxContainer from "./containers/list-container";
 import ItemContainer from "./containers/item-container";
 // import rootReducer from "./reducers/basic";
 import listReducer from "./reducers/list";
@@ -21,21 +22,20 @@ const rootReducer = combineReducers({
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
-console.log("STORE:", store.getState());
+ConsoleLog("STORE:", store.getState());
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    console.log("[App.js] constructor");
+    ConsoleLog("[App] constructor");
   }
 
   componentDidMount() {
-    console.log("[App.js] componentDidMount");
+    ConsoleLog("[App] componentDidMount");
   }
 
   render() {
-    // console.log("[App.js] render... ");
-    console.log("[App.js] render... ");
+    ConsoleLog("[App] render... ");
 
     return (
       <div className="App">

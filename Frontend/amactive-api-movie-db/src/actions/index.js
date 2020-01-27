@@ -1,11 +1,12 @@
 import axios from "axios";
+import ConsoleLog from "../assets/console-log";
 
 export function loadResults(getQuery, getPage) {
   let query = getQuery ? getQuery : null;
   let page = getPage ? getPage : null;
-  console.log("[loadResults] query = ", query, ", page = ", page);
+  ConsoleLog("[loadResults] query = ", query, ", page = ", page);
   if (!query) {
-    console.log(
+    ConsoleLog(
       "[loadResults] DO NOT LOAD because query = ",
       query,
       ", page = ",
@@ -15,7 +16,7 @@ export function loadResults(getQuery, getPage) {
       return [];
     };
   }
-  console.log(
+  ConsoleLog(
     "[loadResults] Generate api url based on query = ",
     query,
     ", page = ",
@@ -25,8 +26,8 @@ export function loadResults(getQuery, getPage) {
 
   return dispatch => {
     return axios.get(apiUrl).then(response => {
-      console.log("[actions] apiUrl = ", apiUrl);
-      console.log("[actions] response.data = ", response.data);
+      ConsoleLog("[actions] apiUrl = ", apiUrl);
+      ConsoleLog("[actions] response.data = ", response.data);
       dispatch(populateList(query, page, response.data));
     });
   };
@@ -45,20 +46,20 @@ export function populateList(getQuery, getPage, getList) {
 export function loadItem(getId) {
   let itemId = getId ? getId : null;
 
-  console.log("[loadItem] itemId = ", itemId);
+  ConsoleLog("[loadItem] itemId = ", itemId);
   if (!itemId) {
-    console.log("[loadItem] DO NOT LOAD because itemId is not set");
+    ConsoleLog("[loadItem] DO NOT LOAD because itemId is not set");
     return dispatch => {
       return [];
     };
   }
-  console.log("[loadResults] Generate api url based on itemId = ", itemId);
+  ConsoleLog("[loadResults] Generate api url based on itemId = ", itemId);
   const apiUrl = `https://api.themoviedb.org/3/movie/${itemId}?api_key=03b8572954325680265531140190fd2a&language=en-US`;
 
   return dispatch => {
     return axios.get(apiUrl).then(response => {
-      console.log("[actions] apiUrl = ", apiUrl);
-      console.log("[actions] response.data = ", response.data);
+      ConsoleLog("[actions] apiUrl = ", apiUrl);
+      ConsoleLog("[actions] response.data = ", response.data);
       dispatch(populateItem(response.data));
     });
   };

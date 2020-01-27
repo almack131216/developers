@@ -1,4 +1,5 @@
 import React from "react";
+import ConsoleLog from "../../assets/console-log";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 import "./_pagination.css";
 
@@ -9,7 +10,7 @@ const Pagination = ({ totalPosts, totalPages, paginate, currentPage }) => {
   ///////
   // <li> Generate Tag to avoid duplication of markup
   const generateLiTag = ({ num, isPrev, isNext, isActive }) => {
-    console.log("[Pagination.js] generateLiTag()...", isPrev);
+    ConsoleLog("[Pagination.js] generateLiTag()...", isPrev);
 
     let liKey = num;
     if (isPrev) liKey = "li-prev";

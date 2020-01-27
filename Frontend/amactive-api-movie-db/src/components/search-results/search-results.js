@@ -1,55 +1,32 @@
 import React, { Component } from "react";
+import ConsoleLog from "../../assets/console-log";
 import { Link } from "react-router-dom";
 // import parse from "html-react-parser";
 
-export default class Box extends Component {
+export default class List extends Component {
   render() {
-    console.log("[box.js] render()...", this.props);
+    ConsoleLog("[list.js] render()...", this.props);
     // const siteData = this.props.siteData;
-    // console.log("[box.js] render()... siteData = ", siteData);
+    // ConsoleLog("[list.js] render()... siteData = ", siteData);
     const {
       page: pageActive,
       total_results,
       total_pages,
       results
     } = this.props.results;
-    let query = this.props.query;
-    let page = this.props.page ? this.props.page : 1;
 
     return (
-      <div className="box-wrap">
-        <div className="box">
-          <p>
-            [3. Box] query: {query}, page: {page}
-          </p>
-          <input
-            type="text"
-            name="query"
-            id="query"
-            value={query}
-            onChange={this.props.changed}
-          />
-          <button
-            onClick={e => {
-              this.props.handleClick(query);
-            }}
-          >
-            Btn
-          </button>
-        </div>
-        <div className="box-results">
+      <div className="list-wrap">
+        <div className="list-results">
           <h1>Search results</h1>
-
-          {/* {this.props.results} */}
           <ul>
             <li>page: {pageActive}</li>
             <li>total_results: {total_results}</li>
             <li>total_pages: {total_pages}</li>
-            {/* <li>results: {results}</li> */}
           </ul>
           {results && results.length > 0
             ? results.map((item, index) => {
-                // console.log(item.title);
+                // ConsoleLog(item.title);
                 return (
                   <li key={index}>
                     <div style={{ display: "block" }}>

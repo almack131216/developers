@@ -4,9 +4,9 @@ let defaultState = {
 };
 
 const itemReducer = (state = defaultState, action) => {
-  console.log("itemReducer...");
+  //   console.log("itemReducer...");
   if (action.type === "POPULATE_ITEM") {
-    console.log("itemReducer ", action);
+    // console.log("itemReducer ", action);
     return {
       ...state,
       itemId: action.itemId,

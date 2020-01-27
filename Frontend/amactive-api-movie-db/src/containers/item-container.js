@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actionCreators from "../actions/index";
+import ConsoleLog from "../assets/console-log";
 import ItemDetails from "../pages/item-details";
 
 class ItemContainer extends Component {
   constructor(props) {
     super(props);
-    console.log(
+    ConsoleLog(
       "[ItemContainer] ",
       this.props.match.params.slug,
       "....",
@@ -19,7 +20,7 @@ class ItemContainer extends Component {
   }
 
   componentDidMount = () => {
-    console.log(
+    ConsoleLog(
       "[ItemContainer] componentDidMount() > itemId = ",
       this.state.itemId
     );

@@ -5,9 +5,9 @@ let defaultState = {
 };
 
 const listReducer = (state = defaultState, action) => {
-  console.log("listReducer...");
+  // console.log("listReducer...");
   if (action.type === "POPULATE_LIST") {
-    console.log("listReducer ", action);
+    // console.log("listReducer ", action);
     return {
       ...state,
       query: action.query,
