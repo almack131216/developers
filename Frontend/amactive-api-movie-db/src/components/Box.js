@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export default class Box extends Component {
   render() {
-    console.log("[box.js] render()...");
+    console.log("[box.js] render()...", this.props);
     // const siteData = this.props.siteData;
     // console.log("[box.js] render()... siteData = ", siteData);
     const {
@@ -58,6 +58,7 @@ export default class Box extends Component {
                           <img
                             style={{ width: "100%", height: "auto" }}
                             src={`https://image.tmdb.org/t/p/w300_and_h450_bestv2${item.poster_path}`}
+                            alt={item.title}
                           />
                         </Link>
                       </div>

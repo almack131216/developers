@@ -40,3 +40,33 @@ export function populateList(getQuery, getPage, getList) {
     results: getList
   };
 }
+
+// details
+export function loadItem(getId) {
+  let itemId = getId ? getId : null;
+
+  console.log("[loadItem] itemId = ", itemId);
+  if (!itemId) {
+    console.log("[loadItem] DO NOT LOAD because itemId is not set");
+    return dispatch => {
+      return [];
+    };
+  }
+  console.log("[loadResults] Generate api url based on itemId = ", itemId);
+  const apiUrl = `https://api.themoviedb.org/3/movie/${itemId}?api_key=03b8572954325680265531140190fd2a&language=en-US`;
+
+  return dispatch => {
+    return axios.get(apiUrl).then(response => {
+      console.log("[actions] apiUrl = ", apiUrl);
+      console.log("[actions] response.data = ", response.data);
+      dispatch(populateItem(response.data));
+    });
+  };
+}
+
+export function populateItem(getItem) {
+  return {
+    type: "POPULATE_ITEM",
+    result: getItem
+  };
+}

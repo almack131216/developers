@@ -1,23 +1,10 @@
-let defaultState = {
-  query: "",
-  page: 1,
-  results: {}
-};
+import { combineReducers } from "redux";
+import listReducer from "./list";
+import itemReducer from "./item";
 
-const mainReducer = (state = defaultState, action) => {
-  if (action.type === "POPULATE_LIST") {
-    console.log("mainReducer ", action);
-    return {
-      ...state,
-      query: action.query,
-      page: action.page,
-      results: action.results
-    };
-  } else {
-    return {
-      ...state
-    };
-  }
-};
+const rootReducer = combineReducers({
+  listReducer,
+  itemReducer
+});
 
-export default mainReducer;
+export default rootReducer;

@@ -1,18 +1,27 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware, combineReducers } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
-import reducers from "./reducers/index";
-import SiteData from "./assets/site-data";
+
+// import SiteData from "./assets/site-data";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Error from "./pages/error";
 import BoxContainer from "./containers/box-container";
-import ItemDetails from "./pages/item-details";
+import ItemContainer from "./containers/item-container";
+// import rootReducer from "./reducers/basic";
+import listReducer from "./reducers/list";
+import itemReducer from "./reducers/item";
+// combining two reducers into a single reducer
+const rootReducer = combineReducers({
+  list: listReducer,
+  item: itemReducer
+});
 
-let store = createStore(reducers, applyMiddleware(thunk));
+const store = createStore(rootReducer, applyMiddleware(thunk));
+console.log("STORE:", store.getState());
 
 class App extends React.Component {
   constructor(props) {
@@ -32,20 +41,8 @@ class App extends React.Component {
       <div className="App">
         <main>
           <Switch>
-            <Route exact path="/">
-              <div>
-                <p>[1. index.js]</p>
-                <BoxContainer siteData={SiteData} />
-              </div>
-            </Route>
-
-            <Route
-              exact
-              path="/movie/:slug"
-              component={routerProps => (
-                <ItemDetails itemId={routerProps.match.params.slug} />
-              )}
-            />
+            <Route exact path="/" component={BoxContainer} />
+            <Route exact path="/movie/:slug" component={ItemContainer} />
             <Route component={Error} />
           </Switch>
         </main>

@@ -10,11 +10,12 @@ class BoxContainer extends Component {
     console.log("[BoxContainer] ", props);
     this.siteData = props.siteData;
     console.log("[BoxContainer] render()... siteData = ", this.siteData);
+    this.showPagination = false;
 
     this.state = {
-      query: props.query,
-      page: props.page,
-      showPagination: false
+      query: props.list.query,
+      page: props.list.page,
+      results: props.list.results
     };
   }
 
@@ -33,14 +34,15 @@ class BoxContainer extends Component {
   };
 
   render() {
+    console.log("???????????", this.props);
     // PAGINATION
     let paginationComp = null;
-    if (this.props.results.results) {
-      const sortedItems = this.props.results.results;
+    if (this.props.list.results && this.props.list.results.results) {
+      const sortedItems = this.props.list.results.results;
       const currentPage = this.state.page;
-      const totalPages = this.props.results.total_pages;
-      this.state.showPagination = totalPages > 1 ? true : false;
-      console.log("[BoxContainer] showPagination: ", this.state.showPagination);
+      const totalPages = this.props.list.results.total_pages;
+      this.showPagination = totalPages > 1 ? true : false;
+      console.log("[BoxContainer] showPagination: ", this.showPagination);
       // CHANGE page
       const paginate = pageNumber => this.goToPage(pageNumber);
       // CREATE pagination component based on props
@@ -49,7 +51,7 @@ class BoxContainer extends Component {
           totalPosts={sortedItems.length}
           paginate={paginate}
           currentPage={currentPage}
-          totalPages={this.props.results.total_pages}
+          totalPages={this.props.list.results.total_pages}
         />
       );
     }
@@ -59,16 +61,16 @@ class BoxContainer extends Component {
       <div>
         <p>
           [2. BoxContainer] query: {this.state.query}, page: {this.state.page},
-          showPagination: {this.state.showPagination === true ? "yes" : "no"}
+          showPagination: {this.showPagination === true ? "yes" : "no"}
         </p>
-        {this.state.showPagination === true ? paginationComp : null}
+        {this.showPagination === true ? paginationComp : null}
         <Box
           siteData={this.siteData}
           handleClick={() => this.props.loadResults(this.state.query, 1)}
           handlePageChange={p => this.goToPage(p)}
           query={this.state.query}
           page={this.state.page}
-          results={this.props.results}
+          results={this.props.list.results}
           changed={this.handleFilterChange}
         />
       </div>
